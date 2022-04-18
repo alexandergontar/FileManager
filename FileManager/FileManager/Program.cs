@@ -12,6 +12,15 @@ namespace FileManager
 
         static void Main(string[] args)
         {
+            if (Directory.Exists(Properties.Settings.Default.Path))
+            {
+                currentDir = Properties.Settings.Default.Path;
+            }
+            else 
+            {
+                currentDir = @"C:\";
+            }
+
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Title = "FileManager Study";
 
@@ -80,6 +89,8 @@ namespace FileManager
                         if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
                         {
                             currentDir = commandParams[1];
+                            Properties.Settings.Default.Path = currentDir;
+                            Properties.Settings.Default.Save();
                         }
 
                         break;
