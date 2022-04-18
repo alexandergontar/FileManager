@@ -1,0 +1,7 @@
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\bin\Debug\FileManager.exe.config
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\bin\Debug\FileManager.exe
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\bin\Debug\FileManager.pdb
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\obj\Debug\FileManager.csproj.AssemblyReference.cache
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\obj\Debug\FileManager.csproj.CoreCompileInputs.cache
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\obj\Debug\FileManager.exe
+C:\GIT_projects\FileManager\FileManager\FileManager\FileManager\obj\Debug\FileManager.pdb
