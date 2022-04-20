@@ -55,10 +55,27 @@ namespace FileManager
         {
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
             (int x, int y) = UI.GetCursorPosition();
-            Console.SetCursorPosition(x+1, y+1);
-            Console.Write("Help:");
+            Console.SetCursorPosition(x + 1, y + 1);
+            Console.Write("Примеры использования комманд:");
             Console.SetCursorPosition(x + 1, y + 2);
-            Console.Write("Help:");
+            Console.Write("cd C:\\Source - изменение текущего каталога");
+            Console.SetCursorPosition(x + 1, y + 3);
+            Console.Write("ls C:\\Source -p n - вывод дерева подкаталогов и файлов постранично, где n- номер страницы");
+            Console.SetCursorPosition(x + 1, y + 4);
+            Console.Write("delfile C:\\Source\\filename.ext - удаление файла ");
+            Console.SetCursorPosition(x + 1, y + 5);
+            Console.Write("file C:\\Source\\filename.ext - вывод информации о файле ");
+            Console.SetCursorPosition(x + 1, y + 6);
+            Console.Write("dir C:\\Source - вывод информации о каталоге ");
+            Console.SetCursorPosition(x + 1, y + 7);
+            Console.Write("cp C:\\Source\\filename1.ext D:\\Source\\filename2.ext - копирование файлов ");
+            Console.SetCursorPosition(x + 1, y + 8);
+            Console.Write("cpdir C:\\Source D:\\Source2 - копирование каталогов  ");
+            Console.SetCursorPosition(x + 1, y + 9);
+            Console.Write("deldir C:\\Source  - удаление каталога  ");
+            Console.SetCursorPosition(x + 1, y + 10);
+            Console.Write("deldir -r C:\\Source - удаление каталога рекурсивно  ");
+
         }
         public static void Greeting()
         {
