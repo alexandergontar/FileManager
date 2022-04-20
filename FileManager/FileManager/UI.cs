@@ -6,6 +6,9 @@ namespace FileManager
 {
     public static class UI
     {
+        const int WINDOW_HEIGHT = 30;
+        const int WINDOW_WIDTH = 120;
+
         public static void DrawWindow(int x, int y, int width, int height)
         {
             Console.SetCursorPosition(x, y);
@@ -46,6 +49,22 @@ namespace FileManager
             // Кортежи
             // https://docs.microsoft.com/ru-ru/dotnet/csharp/language-reference/builtin-types/value-tuples
             return (Console.CursorLeft, Console.CursorTop);
+        }
+
+        public static void Help() 
+        {
+            UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
+            (int x, int y) = UI.GetCursorPosition();
+            Console.SetCursorPosition(x+1, y+1);
+            Console.Write("Help:");
+            Console.SetCursorPosition(x + 1, y + 2);
+            Console.Write("Help:");
+        }
+        public static void Greeting()
+        {
+            //UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
+            Console.SetCursorPosition(1, 1);
+            Console.WriteLine("Введите help в коммандной строке  для справки а командам");
         }
 
     }

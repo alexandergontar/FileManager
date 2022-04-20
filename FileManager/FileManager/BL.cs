@@ -82,6 +82,26 @@ namespace FileManager
             }
         }
 
+        public static void DirInfo(string path) 
+        {
+            UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
+            Console.SetCursorPosition(1, 19);
+            try
+            {
+               string[] files = Directory.GetFiles(path);
+               string[] folders = Directory.GetDirectories(path);
+               DateTime dateTime = Directory.GetCreationTime(path);
+               Console.WriteLine("Папка: "+path);
+               Console.SetCursorPosition(1, 20);
+               Console.WriteLine($"Создан: {dateTime} Файлов: {files.Length} Папок: {folders.Length}");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+
         public static void CopyFile(string source, string target)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -98,7 +118,7 @@ namespace FileManager
 
         }
 
-        public static void CopyDir(string sourceFolder, string destFolder)
+        public static bool CopyDir(string sourceFolder, string destFolder)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
             Console.SetCursorPosition(1, 19);
@@ -120,11 +140,13 @@ namespace FileManager
                     string dest = Path.Combine(destFolder, name);
                     CopyDir(folder, dest);
                 }
-                Console.WriteLine($"{sourceFolder} copied to: {destFolder}");
+                return true;// Console.WriteLine($"{sourceFolder} copied to: {destFolder}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
+                
             }
 
         }

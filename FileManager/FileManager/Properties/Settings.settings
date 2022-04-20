@@ -5,5 +5,11 @@
     <Setting Name="Path" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\JavaProjects\</Value>
     </Setting>
+    <Setting Name="W_height" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="W_width" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -6,12 +6,15 @@ namespace FileManager
 {
     class Program
     {
-        const int WINDOW_HEIGHT = 30;
-        const int WINDOW_WIDTH = 120;
+        private static int WINDOW_HEIGHT;
+        private static int WINDOW_WIDTH;
         private static string currentDir = Directory.GetCurrentDirectory();
 
         static void Main(string[] args)
         {
+            WINDOW_HEIGHT = Properties.Settings.Default.W_height;
+            WINDOW_WIDTH = Properties.Settings.Default.W_width;
+
             if (Directory.Exists(Properties.Settings.Default.Path))
             {
                 currentDir = Properties.Settings.Default.Path;
@@ -22,7 +25,7 @@ namespace FileManager
             }
 
             Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.Title = "FileManager Study";
+            Console.Title = "FileManager";
 
             Console.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
             Console.SetBufferSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -30,6 +33,7 @@ namespace FileManager
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
             //UI.DrawConsole(currentDir, 0, 26, WINDOW_WIDTH, 3);
+            UI.Greeting();
             UpdateConsole();
             Console.ReadKey(true);
         }
@@ -121,6 +125,13 @@ namespace FileManager
                         }
 
                         break;
+                    case "dir":
+                        if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
+                        {
+                            BL.DirInfo(commandParams[1]);
+                        }
+
+                        break;
                     case "cp":
                         if (commandParams.Length > 2 && File.Exists(commandParams[1]))
                         {
@@ -128,10 +139,14 @@ namespace FileManager
                         }
 
                         break;
-                    case "cpdir":
+                    case "cpdir":                        
                         if (commandParams.Length > 2 && Directory.Exists(commandParams[1]))
                         {
-                            BL.CopyDir(commandParams[1], commandParams[2]);
+                            if (BL.CopyDir(commandParams[1], commandParams[2]))
+                            {
+                              Console.WriteLine($"{commandParams[1]} copied to: {commandParams[2]}");
+                            }                           
+                    
                         }
 
                         break;
@@ -146,6 +161,14 @@ namespace FileManager
                         }
 
                         break;
+                    case "help":                        
+                        if (commandParams.Length == 1)
+                        {
+                            UI.Help();  
+                        }
+
+                        break;
+
                 }
             }
             UpdateConsole();
