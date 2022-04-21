@@ -75,6 +75,9 @@ namespace FileManager
             Console.Write("deldir C:\\Source  - удаление каталога  ");
             Console.SetCursorPosition(x + 1, y + 10);
             Console.Write("deldir -r C:\\Source - удаление каталога рекурсивно  ");
+            Console.SetCursorPosition(x + 1, y + 11);
+            Console.Write("cat C:\\Source\\filename.ext - вывод на экран текста файла");
+
 
         }
         public static void Greeting()

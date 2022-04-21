@@ -125,6 +125,13 @@ namespace FileManager
                         }
 
                         break;
+                    case "cat":
+                        if (commandParams.Length > 1 && File.Exists(commandParams[1]))
+                        {
+                            BL.CatFile(commandParams[1]);
+                        }
+
+                        break;
                     case "dir":
                         if (commandParams.Length > 1 && Directory.Exists(commandParams[1]))
                         {
