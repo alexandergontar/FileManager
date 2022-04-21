@@ -7,7 +7,7 @@ namespace FileManager
     {
         const int WINDOW_HEIGHT = 30;
         const int WINDOW_WIDTH = 120;
-       
+
         //формирование строки дерева
         public static void GetTree(StringBuilder tree, DirectoryInfo dir, string indent, bool lastDirectory)
         {
@@ -60,6 +60,7 @@ namespace FileManager
             {
                 Console.SetCursorPosition(1, 20);
                 Console.WriteLine(ex.Message);
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
 
         }
@@ -83,11 +84,12 @@ namespace FileManager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
         }
 
         //вывод текстового содержимого файла
-        public static void CatFile(string path) 
+        public static void CatFile(string path)
         {
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
             (int x, int y) = UI.GetCursorPosition();
@@ -106,36 +108,36 @@ namespace FileManager
                         y = firstLine;
                         Console.ReadKey(true);
                     }
-                    Console.SetCursorPosition(x+1, ++y);
+                    Console.SetCursorPosition(x + 1, ++y);
                     Console.Write(lines[i]);
                     count++;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
         }
 
         //вывод информации о каталоге
-        public static void DirInfo(string path) 
+        public static void DirInfo(string path)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
             Console.SetCursorPosition(1, 19);
             try
             {
-               string[] files = Directory.GetFiles(path);
-               string[] folders = Directory.GetDirectories(path);
-               DateTime dateTime = Directory.GetCreationTime(path);
-               Console.WriteLine("Папка: "+path);
-               Console.SetCursorPosition(1, 20);
-               Console.WriteLine($"Создан: {dateTime} Файлов: {files.Length} Папок: {folders.Length}");
+                string[] files = Directory.GetFiles(path);
+                string[] folders = Directory.GetDirectories(path);
+                DateTime dateTime = Directory.GetCreationTime(path);
+                Console.WriteLine("Папка: " + path);
+                Console.SetCursorPosition(1, 20);
+                Console.WriteLine($"Создан: {dateTime} Файлов: {files.Length} Папок: {folders.Length}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
-            
+
         }
 
         //копирование файла
@@ -151,6 +153,7 @@ namespace FileManager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
 
         }
@@ -183,12 +186,13 @@ namespace FileManager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
                 return false;
-                
+
             }
 
         }
-        
+
         // удаление каталогов/подкаталогов с рекурсией и без
         public static void DelDir(string path, bool recurs)
         {
@@ -202,7 +206,36 @@ namespace FileManager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                BL.ErrorLog("random_name_exception.txt", ex.Message);
             }
+
+        }
+
+        // логгирование исключений в текстовый файл
+        public static void ErrorLog(string logFile, string errMessage)
+        {
+            try
+            {
+                if (!Directory.Exists(@"errors"))
+                {
+                    Directory.CreateDirectory(@"errors");
+                }
+                string logFilePath = Path.Combine(@"errors", logFile);
+                if (!File.Exists(logFilePath))
+                {
+                    File.Create(logFilePath);
+                }
+                using (StreamWriter sw = File.AppendText(logFilePath)) 
+                {
+                 sw.WriteLine(DateTime.Now.ToString()+": "+ errMessage);
+                }
+                
+            }
+            catch (Exception)
+            {
+                
+            }
+
 
         }
 
