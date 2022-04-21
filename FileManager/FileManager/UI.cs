@@ -9,6 +9,7 @@ namespace FileManager
         const int WINDOW_HEIGHT = 30;
         const int WINDOW_WIDTH = 120;
 
+        // отрисовка окна вывода
         public static void DrawWindow(int x, int y, int width, int height)
         {
             Console.SetCursorPosition(x, y);
@@ -37,6 +38,7 @@ namespace FileManager
             Console.SetCursorPosition(x, y);
         }
 
+        // рисование консоли ввода команд
         public static void DrawConsole(string dir, int x, int y, int width, int height)
         {
             DrawWindow(x, y, width, height);
@@ -44,13 +46,13 @@ namespace FileManager
             Console.Write($"{dir}>");
         }
 
+        // получение координат курсора
         public static (int left, int top) GetCursorPosition()
-        {
-            // Кортежи
-            // https://docs.microsoft.com/ru-ru/dotnet/csharp/language-reference/builtin-types/value-tuples
+        {        
             return (Console.CursorLeft, Console.CursorTop);
         }
 
+        // отображение справки командной строки
         public static void Help() 
         {
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
@@ -77,14 +79,13 @@ namespace FileManager
             Console.Write("deldir -r C:\\Source - удаление каталога рекурсивно  ");
             Console.SetCursorPosition(x + 1, y + 11);
             Console.Write("cat C:\\Source\\filename.ext - вывод на экран текста файла");
-
-
         }
+
+        // отображение приветствия при запуске приложения
         public static void Greeting()
-        {
-            //UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
+        {            
             Console.SetCursorPosition(1, 1);
-            Console.WriteLine("Введите help в коммандной строке  для справки а командам");
+            Console.WriteLine("Введите help в коммандной строке  для справки по командам");
         }
 
     }

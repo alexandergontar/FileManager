@@ -12,6 +12,7 @@ namespace FileManager
 
         static void Main(string[] args)
         {
+            // установка параметров страници и текущей папки из файла конфигурации
             WINDOW_HEIGHT = Properties.Settings.Default.W_height;
             WINDOW_WIDTH = Properties.Settings.Default.W_width;
 
@@ -21,7 +22,7 @@ namespace FileManager
             }
             else 
             {
-                currentDir = @"C:\";
+                currentDir = Directory.GetDirectoryRoot(Directory.GetCurrentDirectory());
             }
 
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -29,12 +30,11 @@ namespace FileManager
 
             Console.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
             Console.SetBufferSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-            UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
-            UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
-            //UI.DrawConsole(currentDir, 0, 26, WINDOW_WIDTH, 3);
-            UI.Greeting();
-            UpdateConsole();
+            
+            UI.DrawWindow(0, 0, WINDOW_WIDTH, 18); // окно вывода дерева или текста файла
+            UI.DrawWindow(0, 18, WINDOW_WIDTH, 8); // окно вывода информации           
+            UI.Greeting();  // приветствие при запуске
+            UpdateConsole(); // цикл ввода в консоль
             Console.ReadKey(true);
         }
         static void UpdateConsole()
@@ -42,6 +42,7 @@ namespace FileManager
             UI.DrawConsole(currentDir, 0, 26, WINDOW_WIDTH, 3);
             ProcessEnterCommand(WINDOW_WIDTH);
         }
+        // формирование строки вводимой команды
         static void ProcessEnterCommand(int width)
         {
             (int left, int top) = UI.GetCursorPosition();
@@ -78,10 +79,11 @@ namespace FileManager
                     }
                 }
             }
-            while (key != (char)13);
+            while (key != (char)13); // enter key
             ParseCommandString(command.ToString());
         }
 
+        // парсинг введенной командной строки и вызов методов - обработчиков
         static void ParseCommandString(string command)
         {
             string[] commandParams = command.ToLower().Split(' ');
@@ -178,12 +180,15 @@ namespace FileManager
 
                 }
             }
-            UpdateConsole();
+            UpdateConsole(); // возвращение в цикл ввода команд
         }
+        
+        // отображение дерева в верхнем окне
         static void DrawTree(DirectoryInfo dir, int page)
         {
             StringBuilder tree = new StringBuilder();
-            BL.GetTree(tree, dir, "", true);
+            BL.GetTree(tree, dir, "", true); // получнеие строки дерева
+           // преобразование одной строки в массив строк, отображающих странцу дерева
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
             (int currentLeft, int currentTop) = UI.GetCursorPosition();
             int pageLines = 16;
