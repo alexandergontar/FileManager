@@ -82,6 +82,37 @@ namespace FileManager
             }
         }
 
+        public static void CatFile(string path) 
+        {
+            UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
+            (int x, int y) = UI.GetCursorPosition();
+            int count = 0;
+            int firstLine = y;
+            try
+            {
+                string[] lines = File.ReadAllLines(path);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (count == 15)
+                    {
+                        Console.SetCursorPosition(x + 1, ++y);
+                        Console.Write("======Для продолжения нажмите любую клавишу=====");
+                        count = 0;
+                        y = firstLine;
+                        Console.ReadKey(true);
+                    }
+                    Console.SetCursorPosition(x+1, ++y);
+                    Console.Write(lines[i]);
+                    count++;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public static void DirInfo(string path) 
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
