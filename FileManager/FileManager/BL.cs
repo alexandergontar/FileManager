@@ -7,6 +7,8 @@ namespace FileManager
     {
         const int WINDOW_HEIGHT = 30;
         const int WINDOW_WIDTH = 120;
+       
+        //формирование строки дерева
         public static void GetTree(StringBuilder tree, DirectoryInfo dir, string indent, bool lastDirectory)
         {
             tree.Append(indent);
@@ -42,6 +44,7 @@ namespace FileManager
                 GetTree(tree, subDirects[i], indent, i == subDirects.Length - 1);
         }
 
+        //удаление файла
         public static void DeleteFile(string path)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -61,6 +64,7 @@ namespace FileManager
 
         }
 
+        //вывод информации о файле
         public static void FileInfo(string path)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -82,6 +86,7 @@ namespace FileManager
             }
         }
 
+        //вывод текстового содержимого файла
         public static void CatFile(string path) 
         {
             UI.DrawWindow(0, 0, WINDOW_WIDTH, 18);
@@ -108,11 +113,11 @@ namespace FileManager
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
+        //вывод информации о каталоге
         public static void DirInfo(string path) 
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -133,6 +138,7 @@ namespace FileManager
             
         }
 
+        //копирование файла
         public static void CopyFile(string source, string target)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -149,6 +155,7 @@ namespace FileManager
 
         }
 
+        //копирование каталогов и подкаталогов с рекурсией
         public static bool CopyDir(string sourceFolder, string destFolder)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
@@ -181,7 +188,8 @@ namespace FileManager
             }
 
         }
-
+        
+        // удаление каталогов/подкаталогов с рекурсией и без
         public static void DelDir(string path, bool recurs)
         {
             UI.DrawWindow(0, 18, WINDOW_WIDTH, 8);
