@@ -52,5 +52,17 @@ namespace FileManager.Properties {
                 return ((int)(this["W_width"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int LinesNumber {
+            get {
+                return ((int)(this["LinesNumber"]));
+            }
+            set {
+                this["LinesNumber"] = value;
+            }
+        }
     }
 }
