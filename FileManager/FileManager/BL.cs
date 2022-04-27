@@ -95,12 +95,13 @@ namespace FileManager
             (int x, int y) = UI.GetCursorPosition();
             int count = 0;
             int firstLine = y;
+            int n = Properties.Settings.Default.LinesNumber;
             try
             {
                 string[] lines = File.ReadAllLines(path);
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    if (count == 15)
+                    if (count == n)
                     {
                         Console.SetCursorPosition(x + 1, ++y);
                         Console.Write("======Для продолжения нажмите любую клавишу=====");

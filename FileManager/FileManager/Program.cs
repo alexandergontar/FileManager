@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-
+using System.Collections.Generic;
 namespace FileManager
 {
     class Program
@@ -9,9 +9,12 @@ namespace FileManager
         private static int WINDOW_HEIGHT;
         private static int WINDOW_WIDTH;
         private static string currentDir = Directory.GetCurrentDirectory();
+        private static List<string> commBuffer;
+        private static int lastCommIndex;
 
         static void Main(string[] args)
         {
+            commBuffer = new List<string>();
             // установка параметров страници и текущей папки из файла конфигурации
             WINDOW_HEIGHT = Properties.Settings.Default.W_height;
             WINDOW_WIDTH = Properties.Settings.Default.W_width;
@@ -42,7 +45,7 @@ namespace FileManager
             UI.DrawConsole(currentDir, 0, 26, WINDOW_WIDTH, 3);
             ProcessEnterCommand(WINDOW_WIDTH);
         }
-        // формирование строки вводимой команды
+        // формирование строки вводимой команды и вывод истории команд
         static void ProcessEnterCommand(int width)
         {
             (int left, int top) = UI.GetCursorPosition();
@@ -50,9 +53,11 @@ namespace FileManager
             char key;
             do
             {
-                key = Console.ReadKey().KeyChar;
+                var keyInfo = Console.ReadKey();
+                var k = keyInfo.Key;  // получить клавишу              
+                key = keyInfo.KeyChar; // получить символ
 
-                if (key != 8 && key != 13)
+                if (key != 8 && key != 13 && key != (int)ConsoleKey.UpArrow && key != (int)ConsoleKey.DownArrow)
                     command.Append(key);
 
                 (int currentLeft, int currentTop) = UI.GetCursorPosition();
@@ -62,6 +67,26 @@ namespace FileManager
                     Console.SetCursorPosition(currentLeft - 1, top);
                     Console.Write(" ");
                     Console.SetCursorPosition(currentLeft - 1, top);
+                }
+                if (k == ConsoleKey.UpArrow && commBuffer.Count > 0 && lastCommIndex >= 0)
+                {
+                    string lastCommand = commBuffer[lastCommIndex];
+                    if(lastCommIndex > 0) lastCommIndex--;                    
+                    Console.SetCursorPosition(left, top);
+                    while (Console.CursorLeft<119) { Console.Write(" "); }                   
+                    Console.SetCursorPosition(left, top);
+                    Console.Write(lastCommand);
+                    command = new StringBuilder(lastCommand);
+                }
+                if (k == ConsoleKey.DownArrow && commBuffer.Count > 1 && lastCommIndex < commBuffer.Count-1)
+                {
+                    string lastCommand = commBuffer[lastCommIndex];
+                    lastCommIndex++;
+                    Console.SetCursorPosition(left, top);
+                    while (Console.CursorLeft < 119) { Console.Write(" "); }                   
+                    Console.SetCursorPosition(left, top);
+                    Console.Write(lastCommand);
+                    command = new StringBuilder(lastCommand);
                 }
                 if (key == (char)8/*ConsoleKey.Backspace*/)
                 {
@@ -80,6 +105,8 @@ namespace FileManager
                 }
             }
             while (key != (char)13); // enter key
+            commBuffer.Add(command.ToString());
+            lastCommIndex = commBuffer.Count - 1;
             ParseCommandString(command.ToString());
         }
 
